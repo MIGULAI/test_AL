@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,19 +17,27 @@ namespace TestAppAL
             _numberTicket = st;
         }
 
-        public void NumberLengthFormat()
+        public bool NumberLengthFormat()
         {
             _line = new LinkedList<char>(_numberTicket.ToCharArray());
             if (_line.Count >= 4 & _line.Count <= 8)
             {
                 if (_line.Count % 2 == 1)
                 {
+
                     _line.AddFirst('0');
+                    return true;
+                }
+                else
+                {
+                    return true;
                 }
             }
             else
             {
                 Console.WriteLine("This number is not to this game");
+                _line.Clear();
+                return false;
             }
         }
 
@@ -77,16 +86,19 @@ namespace TestAppAL
                 Console.WriteLine("Enter your ticket number :");
                 String numberTicket = Console.ReadLine();
                 LuckyTicket ticket = new LuckyTicket(numberTicket);
-                ticket.NumberLengthFormat();
-                ticket.NumberFormat();
-                bool res = ticket.MagicAlgorithm();
-                if(res is true)
+                bool st = ticket.NumberLengthFormat();
+                if(st is true)
                 {
-                    Console.WriteLine("Your ticket is lucky");
-                }
-                else
-                {
-                    Console.WriteLine("Your ticket is unlucky");
+                    ticket.NumberFormat();
+                    bool res = ticket.MagicAlgorithm();
+                    if (res is true)
+                    {
+                        Console.WriteLine("Your ticket is lucky");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Your ticket is unlucky");
+                    }
                 }
             }
         }
